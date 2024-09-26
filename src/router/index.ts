@@ -18,6 +18,7 @@ router.beforeEach(async (to, from, next) => {
   userStore.loadUserFromLocalStorage();
   const isLoggedIn = userStore.isLoggedIn;
   const loginUrl = to.path === '/login';
+  const registerUrl = to.path === '/register';
   const indexUrl = to.path === '/';
 
   
@@ -25,7 +26,7 @@ router.beforeEach(async (to, from, next) => {
     next({ path: '/todo' });
   }
   
-  else if (!isLoggedIn && !loginUrl) {
+  else if (!isLoggedIn && !loginUrl && !registerUrl) {
     next({ path: '/login' });
   }
   

@@ -1,18 +1,26 @@
 import { defineStore } from 'pinia';
 import { userRepository } from '../repositories/userRepository';
 import jwtDecode from 'jwt-decode';
-import { Login } from '../interfaces/user';
+import { Login, Register } from '../interfaces/user';
 const user = userRepository();
 
 export const useUserStore = defineStore('userStore', {
   state: () => ({
     id: null as String | null,
     isAuthenticated: false,
-    accessToken: null as string | null, // Store the access token
+    accessToken: null as string | null
   }),
   
   actions: {
-    // Login action
+    async register(username: string, password: string) {
+      try {
+        const data: Register = { username, password }
+        const rs = await user.register(data);
+          return rs.data?.isSuccess ? true : false
+      } catch (error: any) {
+          throw error.response.data;
+      }
+    },
     async login(username: string, password: string) {
       try {
         const data: Login = { username, password }
@@ -29,11 +37,8 @@ export const useUserStore = defineStore('userStore', {
         return false;
       }
     },
-    
-    // Logout action
     async logout() {
       try {
-        // Clear the user data, access token, and localStorage
         this.id = null;
         this.isAuthenticated = false;
         this.accessToken = null;
@@ -65,7 +70,6 @@ export const useUserStore = defineStore('userStore', {
   },
   
   getters: {
-    // Example getter to check if the user is authenticated
     isLoggedIn: (state) => !!state.isAuthenticated,
   },
 });

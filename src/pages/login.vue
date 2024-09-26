@@ -61,16 +61,20 @@ export default {
   },
   methods: {
     async login() {
-      if (this.$refs.loginForm.validate()) {
-          const rs = await useUserStore().login(this.username,this.password);
-          if(rs) {
-              this.activateSnackAlert(true, 'Login Success.');
-              await this.delay(1000);
-              this.$router.push('/todo');
-            } else {
-              this.activateSnackAlert(false, 'Username or password Incorrect.');
-              console.log('fail');
-          }
+        try {
+          if (this.$refs.loginForm.validate()) {
+              const rs = await useUserStore().login(this.username,this.password);
+              if(rs) {
+                  this.activateSnackAlert(true, 'Login Success.');
+                  await this.delay(1000);
+                  this.$router.push('/todo');
+                } else {
+                  this.activateSnackAlert(false, 'Username or password Incorrect.');
+                  console.log('fail');
+              }
+            }
+        } catch (error) {
+            this.activateSnackAlert(false, error.message);
         }
       },
       delay(ms) {
