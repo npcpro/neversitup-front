@@ -7,12 +7,12 @@
       <v-card-text>
         <v-form ref="todoForm" v-model="formValid">
           <v-text-field v-model="todo.title" label="Title" :rules="[rules.required]" required></v-text-field>
-          <v-text-field v-model="todo.description" label="Description" :rules="[rules.required]" required></v-text-field>
+          <v-text-field v-model="todo.description" label="Description"></v-text-field>
         </v-form>
       </v-card-text>
       <v-card-actions>
         <v-btn @click="cancel">Cancel</v-btn>
-        <v-btn color="primary" @click="submitForm">Submit</v-btn>
+        <v-btn color="primary" @click="submitForm" :disabled="!formValid">Submit</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -33,7 +33,8 @@ export default {
   },
   computed: {
     isEditMode() {
-      return this.data.id && this.data.id.length > 0;
+      
+      return this.data?.id?.length > 0;
     }
   },
   data() {
@@ -41,11 +42,11 @@ export default {
       todo: {
         id: this.data.id,
         title: this.data.title,
-        description: this.data.description
+        description: this.data.description || ''
       },
       formValid: false,
       rules: {
-        required: value => !!value || 'Required.'
+          required: value => !!value?.trim() || 'Required.'
       },
       isActive: this.active
     };
@@ -64,11 +65,10 @@ export default {
   },
   methods: {
     submitForm() {
-      const form = this.$refs.todoForm.validate();
-      if (form) {
+      if (this.formValid) {
         console.log(this.todo, 'new to do');
         
-        if(this.todo.id) {
+        if(this.data?.id) {
             this.$emit('edit', this.todo);
         } else {
             this.$emit('add', this.todo);
