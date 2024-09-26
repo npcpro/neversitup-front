@@ -5,10 +5,10 @@ import Vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 import ViteFonts from 'unplugin-fonts/vite'
 import VueRouter from 'unplugin-vue-router/vite'
 import path from 'path';
+import 'dotenv/config';
 
 // Utilities
 import { defineConfig } from 'vite'
-import { fileURLToPath, URL } from 'node:url'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -17,7 +17,7 @@ export default defineConfig({
     Vue({
       template: { transformAssetUrls },
     }),
-    // https://github.com/vuetifyjs/vuetify-loader/tree/master/packages/vite-plugin#readme
+   
     Vuetify({
       autoImport: true,
       styles: {
@@ -45,19 +45,19 @@ export default defineConfig({
       '.jsx',
       '.mjs',
       '.ts',
-      '.tsx',
+      '.tsx', 
       '.vue',
     ],
   },
 server: {
-    port: 3000, // Your local development port
+    port: +process.env.NUXT_PORT || 3000,
     proxy: {
-      // Proxy API requests from /api to the external API server
+     
       '/api': {
-        target: 'https://candidate-assignment.neversitup.com', // The target API server
-        changeOrigin: true, // Needed for virtual hosted sites
-        rewrite: (path) => path.replace(/^\/api/, ''), // Rewrite /api to the root path
-        secure: false, // If the API is using https, this may be needed
+        target: 'https://candidate-assignment.neversitup.com',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+        secure: false,
       },
     },
   },
