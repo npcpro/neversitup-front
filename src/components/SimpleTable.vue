@@ -10,11 +10,11 @@
         </thead>
         <tbody>
             <tr v-for="(row, rowIndex) in data" :key="rowIndex">
-                <td v-for="(column, colIndex) in columns" :key="column.key" :class="{ hidden: column.hidden }">
-                    {{ row[colIndex] }}
+                <td v-for="(column) in columns" :key="column.key" :class="{ hidden: column.hidden }">
+                    {{ row[column.key] }}
                 </td>
                 <td>
-                    <slot name="actions" :row="row"></slot>
+                    <slot name="actions" :item="row"></slot>
                 </td>
             </tr>
         </tbody>
@@ -25,10 +25,11 @@
 interface Column {
     key: string;
     name: string;
+    hidden?: boolean;
 }
 
-const props = defineProps<{
-    columns: Column;
+defineProps<{
+    columns: Column[];
     data: Record<string, any>[];
 }>();
 </script>

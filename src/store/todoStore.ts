@@ -17,14 +17,21 @@ export const useTodoStore = defineStore('todoStore', {
   }),
 
   actions: {
-    async getTodos() {
-      try {
-        console.log(this,'this <==');
+    async get() {
         const rs = await todo.getAll();
         return rs.data;
-      } catch (error) {
-        console.error('Failed to fetch todos', error);
-      }
+    },
+    async add(data: Todo) {
+        const rs = await todo.add(data);
+        return rs.data;
+    },
+    async edit(id: string, data: Todo) {
+        const rs = await todo.updateById(id, data);
+        return rs.data;
+    },
+    async delete(id: string) {
+        const rs = await todo.deleteById(id);
+        return rs.data;
     },
   },
 });

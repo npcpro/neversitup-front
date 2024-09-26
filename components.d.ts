@@ -7,13 +7,15 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
-    copy: typeof import('./src/components/HelloWorld copy.vue')['default']
+    copy: typeof import('./src/components/todo/ToDoDetailDialog copy.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SimpleTable: typeof import('./src/components/SimpleTable.vue')['default']
+    SnackAlert: typeof import('./src/components/SnackAlert.vue')['default']
     Todo: typeof import('./src/components/Todo.vue')['default']
     ToDo: typeof import('./src/components/ToDo.vue')['default']
+    ToDoDeleteDialog: typeof import('./src/components/todo/ToDoDeleteDialog.vue')['default']
     ToDoDetailDialog: typeof import('./src/components/todo/ToDoDetailDialog.vue')['default']
     TodoPage: typeof import('./src/components/TodoPage.vue')['default']
   }
