@@ -41,9 +41,6 @@ Structure folder
 │       todo.ts
 │       user.ts
 │
-├───middleware
-│       auth.ts
-│
 ├───pages
 │       index.vue
 │       login.vue
@@ -51,13 +48,9 @@ Structure folder
 │       todo.vue
 │
 ├───plugins
-│       axios.ts
-│       axiosPlgin.ts
 │       hello.ts
 │       index.ts
 │       README.md
-│       repositories.ts
-│       repositoriesPlugin.ts
 │       vuetify.ts
 │
 ├───repositories
