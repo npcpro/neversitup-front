@@ -4,16 +4,37 @@
  * Automatic routes for `./src/pages/*.vue`
  */
 
-// Composables
+
 import { createRouter, createWebHistory } from 'vue-router/auto'
 import { routes } from 'vue-router/auto-routes'
-
+import { useUserStore } from '../store/userStore';
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes,
 })
 
-// Workaround for https://github.com/vitejs/vite/issues/11804
+router.beforeEach(async (to, from, next) => {
+  const userStore = useUserStore(); 
+  userStore.loadUserFromLocalStorage();
+  const isLoggedIn = userStore.isLoggedIn;
+  const loginUrl = to.path === '/login';
+  const indexUrl = to.path === '/';
+
+  
+  if (isLoggedIn && (loginUrl || indexUrl)) {
+    next({ path: '/todo' });
+  }
+  
+  else if (!isLoggedIn && !loginUrl) {
+    next({ path: '/login' });
+  }
+  
+  else {
+    next();
+  }
+});
+
+
 router.onError((err, to) => {
   if (err?.message?.includes?.('Failed to fetch dynamically imported module')) {
     if (!localStorage.getItem('vuetify:dynamic-reload')) {

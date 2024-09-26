@@ -107,7 +107,7 @@ export default {
                 if(rs.isSuccess) {
                     this.activateSnackAlert(true, 'Add Success.');
                 } else {
-                this.activateSnackAlert(false, 'Add Fail.');
+                    this.activateSnackAlert(false, 'Add Fail.');
                 }
                 await this.getData();
             } catch (error) {
@@ -122,7 +122,6 @@ export default {
                     title: data.title,
                     description: data.description
                 }
-                console.log(editedData,'editedData');
                 
                 const rs = await useTodoStore().edit(id, editedData);
                 if(rs.isSuccess) {

@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia';
 import { todoRepository } from '../repositories/todoRepository';
-
 const todo = todoRepository();
 
 interface Todo {
